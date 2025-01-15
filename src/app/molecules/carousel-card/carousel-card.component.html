@@ -1,0 +1,13 @@
+<div class="card" (click)="navigateToLink()" [ngClass]="{'cursor-pointer': item.link}">
+  <div class="image-container">
+    <img [src]="item.imageUrl" alt="Carousel Image">
+  </div>
+  <div class="card-content">
+    <div class="style-h3">
+      <app-text [content]="item.heading" [tag]="'h3'"></app-text>
+    </div>
+    <div class="style-p">
+      <app-text [content]="item.description" [tag]="'p'"></app-text>
+    </div>
+  </div>
+</div>

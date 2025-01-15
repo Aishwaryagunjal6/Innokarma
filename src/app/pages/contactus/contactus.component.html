@@ -1,0 +1,82 @@
+<h3>
+  Contact Us Here!
+</h3>
+<hr>
+
+<div class="contactus-form">
+  <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <div class="form-group" *ngFor="let field of ['firstName', 'middleName', 'lastName', 'phoneNumber', 'company']">
+      <label [for]="field">{{ field | titlecase }}</label>
+      <app-input
+        [formControl]="getFormControl(field)"
+        [type]="field === 'phoneNumber' ? 'text' : 'text'"
+        [placeholder]="'Enter your ' + field"
+      ></app-input>
+      <div *ngIf="getFormControl(field)?.invalid && getFormControl(field)?.touched">
+        <small class="text-danger">{{ field | titlecase }} is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <app-input
+        [formControl]="getFormControl('email')"
+        type="email"
+        placeholder="Enter your email"
+      ></app-input>
+      <div *ngIf="getFormControl('email')?.invalid && getFormControl('email')?.touched">
+        <small class="text-danger">A valid email is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="position">Position</label>
+      <select id="position" formControlName="position" class="form-control">
+        <option value="">Select Position</option>
+        <option *ngFor="let pos of positions" [value]="pos">{{ pos }}</option>
+      </select>
+      <div *ngIf="getFormControl('position')?.invalid && getFormControl('position')?.touched">
+        <small class="text-danger">Position is required.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Message</label>
+      <app-text-area
+        [formControl]="getFormControl('message')"
+        placeholder="Write your message here"
+        [rows]="5"
+      ></app-text-area>
+      <div *ngIf="getFormControl('message')?.invalid && getFormControl('message')?.touched">
+        <small class="text-danger">Message is required.</small>
+      </div>
+    </div>
+
+    <div class="form-check">
+      <app-input
+        type="checkbox"
+        [formControl]="getFormControl('terms')"
+        labelText="I accept the Terms & Conditions"
+      ></app-input>
+      <div *ngIf="getFormControl('terms')?.invalid && getFormControl('terms')?.touched">
+        <small class="text-danger">You must accept the terms to continue.</small>
+      </div>
+    </div>
+
+  <app-button
+    type="submit"
+    label="Submit"
+    [styleClass]="'btn-primary'"
+    [width]="'80px'"
+    [height]="'32px'"
+    [disabled]="contactForm.invalid">
+  </app-button>
+
+    <div *ngIf="formSubmitted">
+      <p class="text-success">Thank you for your inquiry!</p>
+    </div>
+    <div *ngIf="submissionFailed">
+      <p class="text-danger">There was an error with your submission. Please try again.</p>
+    </div>
+  </form>
+</div>

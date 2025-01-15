@@ -1,0 +1,23 @@
+.testimonial-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  gap: 20px;
+  width: 400px;
+}
+.author-image img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.testimonial-content h4 {
+  margin: 0;
+}
+.star-rating .star {
+  color: #ddd;
+  font-size: 20px;
+}
+.star-rating .filled {
+  color: gold;
+}

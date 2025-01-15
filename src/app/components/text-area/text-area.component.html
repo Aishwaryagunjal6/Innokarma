@@ -1,0 +1,9 @@
+<textarea
+  [ngClass]="styleClass"
+  [attr.aria-label]="placeholder"
+  [placeholder]="placeholder"
+  [rows]="rows"
+  [disabled]="disabled"
+  (input)="handleInput($event)"
+  [ngStyle]="{ height: height, width: width }"
+>{{ value }}</textarea>

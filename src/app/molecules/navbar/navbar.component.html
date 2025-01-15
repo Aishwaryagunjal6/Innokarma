@@ -1,0 +1,34 @@
+<header>
+  <div class="navbar-container">
+    <!-- Logo -->
+    <div class="logo-container">
+      <app-image-link
+        href="https://www.google.co.in/"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiMdspxRcR05arTZg4J9EHU2yQhSYyMI7a8A&s"
+        target="_blank"
+        class="logo">
+      </app-image-link>
+    </div>
+
+    <!-- Navigation Links and SearchBox -->
+    <div class="nav-right">
+      <nav class="nav-links">
+        <ul>
+          <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+          <li><a routerLink="/contact" routerLinkActive="active">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <!-- SearchBox -->
+      <div class="searchbox-container">
+        <app-search-box
+          [placeholder]="'Search...'"
+          [debounceTime]="300"
+          (search)="onSearch($event)">
+        </app-search-box>
+      </div>
+    </div>
+  </div>
+</header>
+
+<router-outlet></router-outlet>

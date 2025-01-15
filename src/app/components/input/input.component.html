@@ -1,0 +1,15 @@
+<label class="custom-label">
+  <input
+    [type]="type"
+    [formControl]="formControl"
+    [placeholder]="type === 'text' || type === 'password' || type === 'email' ? placeholder : null"
+    [checked]="type === 'checkbox' ? formControl.value : null"
+    (input)="onInputChange($event)"
+    (change)="type === 'checkbox' && onInputChange($event)"
+    class="custom-input"
+  />
+  <span *ngIf="type === 'checkbox' && labelText">{{ labelText }}</span>
+</label>
+<div *ngIf="type === 'email' && !isEmailValid" class="error-message">
+  Invalid email format
+</div>

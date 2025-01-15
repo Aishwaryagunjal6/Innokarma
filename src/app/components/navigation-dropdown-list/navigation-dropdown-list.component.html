@@ -1,0 +1,12 @@
+<div [class]="customClass">
+  <ul  [ngClass]="placement">
+    <li *ngFor="let item of items" (click)="onItemClick(item)">
+      {{ item.label }}
+      <ul *ngIf="item.items && item.items.length > 0">
+        <li *ngFor="let subitem of item.items" (click)="onItemClick(subitem)">
+          {{ subitem.label }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

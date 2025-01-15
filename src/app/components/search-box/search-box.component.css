@@ -1,0 +1,21 @@
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%; /* Match the height of the navbar */
+}
+
+.search-input {
+  flex: 1;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s ease;
+  height: 32px; /* Same height as buttons for alignment */
+}
+
+.search-input:focus {
+  border-color: #80cbc4;
+  outline: none;
+}

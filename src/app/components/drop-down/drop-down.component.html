@@ -1,0 +1,10 @@
+<div class="dropdown" [ngClass]="{ 'disabled': disabled }" [ngClass]="styleClass" (click)="$event.stopPropagation()">
+  <button class="dropdown-toggle" (click)="toggleDropdown()" [disabled]="disabled">
+    {{ selectedValue || placeholder }} <!-- Display selected value or placeholder -->
+  </button>
+  <ul *ngIf="isOpen" class="dropdown-menu">
+    <li *ngFor="let item of items" (click)="selectItem(item)">
+      {{ item.label }}
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,15 @@
+<div class="testimonial-card">
+  <div *ngIf="showAuthorImage && profileImage" class="author-image">
+    <img [src]="profileImage" alt="Author Image">
+  </div>
+  <div class="testimonial-content">
+    <h4>{{ authorName }}</h4>
+    <p *ngIf="authorTitle || authorCompany">
+      {{ authorTitle }}<span *ngIf="authorCompany">, {{ authorCompany }}</span>
+    </p>
+    <p>{{ testimonialText }}</p>
+    <div *ngIf="showStarRating && starRating" class="star-rating">
+      <span *ngFor="let i of [1,2,3,4,5]" class="star" [class.filled]="i <= (starRating || 0)">★</span>
+    </div>
+  </div>
+</div>

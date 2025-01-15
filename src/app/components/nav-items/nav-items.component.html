@@ -1,0 +1,8 @@
+<li class="nav-item">
+  <ng-container *ngIf="isLink; else buttonTemplate">
+    <a class="nav-link" [href]="href" [ngClass]="styleClass">{{ label }}</a>
+  </ng-container>
+  <ng-template #buttonTemplate>
+    <button class="nav-link" [ngClass]="styleClass">{{ label }}</button> 
+  </ng-template>
+</li>

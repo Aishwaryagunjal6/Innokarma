@@ -1,0 +1,15 @@
+<button
+  [ngClass]="styleClass"
+  [disabled]="disabled"
+  [attr.type]="type"
+  (click)="handleClick()"
+  [ngStyle]="{
+    'background-color': color ? color : '', 
+    'width': width, 
+    'height': height, 
+    'color': color ? 'white' : '', 
+    'border-color': color
+  }">
+  {{ label }}
+  <ng-content></ng-content>
+</button>

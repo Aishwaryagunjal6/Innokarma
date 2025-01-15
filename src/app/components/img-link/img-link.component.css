@@ -1,0 +1,11 @@
+/* Styles for the link wrapper */
+.image-link-wrapper {
+  display: inline-block;
+  text-decoration: none;
+}
+
+/* Styles for the image */
+img {
+  display: block;
+  margin: 0 auto; /* Centers the image inside the wrapper */
+}

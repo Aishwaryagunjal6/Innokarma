@@ -1,0 +1,10 @@
+<ng-container [ngSwitch]="tag">
+  <p *ngSwitchCase="'p'">{{ content }}</p>
+  <h1 *ngSwitchCase="'h1'">{{ content }}</h1>
+  <h2 *ngSwitchCase="'h2'">{{ content }}</h2>
+  <h3 *ngSwitchCase="'h3'">{{ content }}</h3>
+  <span *ngSwitchCase="'span'">{{ content }}</span>
+  <ng-container *ngSwitchDefault>
+    <p>{{ content }}</p>
+  </ng-container>
+</ng-container>

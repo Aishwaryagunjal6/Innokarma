@@ -1,0 +1,28 @@
+<div class="parent">
+  <div class="carousel">
+    <ngb-carousel
+      #carousel
+      [interval]="interval"
+      [showNavigationArrows]="true"
+      [showNavigationIndicators]="true"
+      [pauseOnHover]="true"
+      [wrap]="true"
+      (slide)="onSlide($event)"
+    >
+      <ng-template ngbSlide *ngFor="let item of carouselItems; let i = index" [id]="'ngb-slide-' + i">
+        <a *ngIf="item.link" [href]="item.link" target="_blank" rel="nofollow noopener noreferrer">
+          <img [src]="item.imageUrl" [alt]="'Slide ' + (i + 1)" class="carousel-img" />
+        </a>
+        <ng-container *ngIf="!item.link">
+          <img [src]="item.imageUrl" [alt]="'Slide ' + (i + 1)" class="carousel-img" />
+        </ng-container>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  <div class="description">
+    <app-image [src]="svgImage" height="40" width="40"/>
+    <p>{{ carouselItems[currentIndex].description }}</p>
+    <h5>{{ carouselItems[currentIndex].heading }}</h5>
+  </div>
+  
+</div>

@@ -1,0 +1,27 @@
+<div class="search-box">
+  <!-- Input field -->
+  <input
+    [(ngModel)]="searchValue"
+    [placeholder]="placeholder"
+    class="search-input"
+    type="text"
+  />
+
+  <!-- Search button -->
+  <app-button
+    label="Search"
+    [styleClass]="'btn-primary'"
+    [width]="'80px'"
+    [height]="'32px'"
+    (onClick)="onSearch()">
+  </app-button>
+
+  <!-- Clear button -->
+  <app-button
+    label="Clear"
+    [styleClass]="'btn-secondary'"
+    [width]="'80px'"
+    [height]="'32px'"
+    (onClick)="clearSearch()">
+  </app-button>
+</div>
