@@ -3,8 +3,8 @@ import { CarouselItem } from '../models/carousel.model';
 export const CAROUSEL_DATA: CarouselItem[] = [
   {
     imageUrl: 'https://picsum.photos/id/10/300/200',
-    heading: 'Heading 1',
-    description: 'Description for carousel item 1. This is a test description.',
+    heading: 'Heading 1Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.',
+    description: 'Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.Description for carousel item 1. This is a test description.',
     link: 'https://google.com',
   },
   {

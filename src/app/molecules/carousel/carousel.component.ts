@@ -18,21 +18,21 @@ export class CarouselComponent implements OnInit, OnDestroy {
   @Input() autoScrollBehavior: 'default' | 'infinite' | 'alternate' = 'default';
   @Input() autoScrollInterval: number = 2500;
 
-  carouselData: CarouselItem[] = CAROUSEL_DATA;
-  private intervalId: any;
+  carouselData: CarouselItem[] = CAROUSEL_DATA.map(item => ({ ...item }));
+  private intervalId: number | null = null;
   private currentIndex = 0;
   private isReversing = false;
   private isMobile = false;
 
-  @HostListener('window:resize', ['$event'])
-  onResize() {
+  @HostListener('window:resize')
+  onResize(): void {
     this.checkMobile();
     this.scrollToIndex();
   }
 
   ngOnInit(): void {
     this.checkMobile();
-    if (this.autoScroll === true) this.startAutoSlide();
+    if (this.autoScroll) this.startAutoSlide();
   }
 
   ngOnDestroy(): void {
@@ -43,17 +43,10 @@ export class CarouselComponent implements OnInit, OnDestroy {
     this.isMobile = window.innerWidth <= 768;
   }
 
-  private getItemWidth(): number {
-    if (!this.carouselInner?.nativeElement) return 0;
-    return this.isMobile ? 
-      this.carouselInner.nativeElement.offsetWidth : 
-      this.carouselInner.nativeElement.offsetWidth / 3;
-  }
-
   startAutoSlide(): void {
-    if (this.autoScroll !== true) return;
+    if (!this.autoScroll) return;
     this.stopAutoSlide();
-    this.intervalId = setInterval(() => {
+    this.intervalId = window.setInterval(() => {
       this.updateIndex();
       this.scrollToIndex();
     }, this.autoScrollInterval);
@@ -61,18 +54,18 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   stopAutoSlide(): void {
     if (this.intervalId) {
-      clearInterval(this.intervalId);
+      window.clearInterval(this.intervalId);
       this.intervalId = null;
     }
   }
 
-  updateIndex(): void {
+  private updateIndex(): void {
     switch (this.autoScrollBehavior) {
       case 'default':
         this.currentIndex = (this.currentIndex + 1) % this.carouselData.length;
         break;
       case 'infinite':
-        this.infiniteScroll();
+        this.nextSlide();
         break;
       case 'alternate':
         this.alternateScroll();
@@ -80,27 +73,18 @@ export class CarouselComponent implements OnInit, OnDestroy {
     }
   }
 
-  infiniteScroll(): void {
-    if (++this.currentIndex >= this.carouselData.length) {
-      const firstItem = this.carouselData.shift();
-      if (firstItem) this.carouselData.push(firstItem);
-      this.currentIndex = this.carouselData.length - 1;
-    }
-  }
-
-  alternateScroll(): void {
+  private alternateScroll(): void {
     this.currentIndex += this.isReversing ? -1 : 1;
-    if (this.currentIndex >= this.carouselData.length - 1 || this.currentIndex <= 0) {
+    if (this.currentIndex >= this.carouselData.length - 2 || this.currentIndex <= 0) {
       this.isReversing = !this.isReversing;
     }
   }
 
-  scrollToIndex(): void {
+  private scrollToIndex(): void {
     if (!this.carouselInner?.nativeElement) return;
-    
-    const itemWidth = this.getItemWidth();
-    const gap = this.isMobile ? 0 : 20; 
-    const offset = this.currentIndex * (itemWidth + gap);
+    const scrollWidth = this.carouselInner.nativeElement.offsetWidth / (this.isMobile ? 1 : 3);
+    const gap = 20;
+    const offset = this.currentIndex * (scrollWidth + (this.isMobile ? 0 : gap));
     
     this.carouselInner.nativeElement.scrollTo({
       left: offset,
@@ -108,37 +92,49 @@ export class CarouselComponent implements OnInit, OnDestroy {
     });
   }
 
-  prevSlide(): void {
-    this.stopAutoSlide();
-    if (--this.currentIndex < 0) {
-      const lastItem = this.carouselData.pop();
-      if (lastItem) {
-        this.carouselData.unshift(lastItem);
-        this.currentIndex = 0;
-      } else {
-        this.currentIndex = 0;
-      }
-    }
-    this.scrollToIndex();
-    if (this.autoScroll === true) {
-      this.startAutoSlide();
-    }
-  }
-
   nextSlide(): void {
     this.stopAutoSlide();
-    if (++this.currentIndex >= this.carouselData.length) {
-      const firstItem = this.carouselData.shift();
-      if (firstItem) {
-        this.carouselData.push(firstItem);
-        this.currentIndex = this.carouselData.length - 1;
-      } else {
-        this.currentIndex = 0;
-      }
+    const isAtEnd = this.currentIndex >= this.carouselData.length - (this.isMobile ? 1 : 3);
+  
+    if (isAtEnd) {
+      const firstItem = this.carouselData[0];
+      this.carouselData = [...this.carouselData.slice(1), firstItem];
+      
+      requestAnimationFrame(() => {
+        if (this.carouselInner?.nativeElement) {
+            this.scrollToIndex();
+        }
+      });
+    } else {
+      this.currentIndex++;
+      this.scrollToIndex();
     }
-    this.scrollToIndex();
-    if (this.autoScroll === true) {
-      this.startAutoSlide();
-    }
+    
+    if (this.autoScroll) this.startAutoSlide();
   }
+  
+  prevSlide(): void {
+    this.stopAutoSlide();
+    
+    if (this.currentIndex === 0) {
+      const lastItem = this.carouselData[this.carouselData.length - 1];
+      this.carouselData = [lastItem, ...this.carouselData.slice(0, -1)];
+      
+      requestAnimationFrame(() => {
+        if (this.carouselInner?.nativeElement) {
+            this.scrollToIndex();
+        }
+      });
+    } else {
+      this.currentIndex--;
+      this.scrollToIndex();
+    }
+    
+    if (this.autoScroll) this.startAutoSlide();
+  }
+
 }
+
+
+
+
